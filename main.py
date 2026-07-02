@@ -16,8 +16,8 @@ HEADERS = {
 
 @mcp.tool()
 async def google_search(query: str) -> str:
-    """Google で指定したキーワードを検索し、結果ページのHTMLを返す。"""
-    url = f"https://www.google.com/search?q={httpx.URL('', params={'q': query}).params}"
+    """Google で指定したキーワードを検索し、結果ページのHTMLを返す。エラー発生時はエラーメッセージ文字列を返す。"""
+    url = httpx.URL("https://www.google.com/search", params={"q": query})
     try:
         async with httpx.AsyncClient(headers=HEADERS, follow_redirects=True, timeout=10.0) as client:
             response = await client.get(url)
