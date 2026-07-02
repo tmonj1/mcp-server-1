@@ -1,14 +1,13 @@
 import pytest
 import httpx
 from unittest.mock import AsyncMock, patch, MagicMock
-from main import mcp
+from main import mcp, google_search
 
 
 @pytest.mark.asyncio
 async def test_google_search_returns_html():
     mock_response = MagicMock()
     mock_response.text = "<html><body>Google Search Results</body></html>"
-    mock_response.raise_for_status = MagicMock()
 
     with patch("httpx.AsyncClient") as mock_client_class:
         mock_client = AsyncMock()
@@ -17,7 +16,6 @@ async def test_google_search_returns_html():
         mock_client.get = AsyncMock(return_value=mock_response)
         mock_client_class.return_value = mock_client
 
-        from main import google_search
         result = await google_search(query="FastMCP")
 
     assert "<html>" in result
@@ -28,7 +26,6 @@ async def test_google_search_returns_html():
 async def test_google_search_uses_correct_url():
     mock_response = MagicMock()
     mock_response.text = "<html></html>"
-    mock_response.raise_for_status = MagicMock()
 
     with patch("httpx.AsyncClient") as mock_client_class:
         mock_client = AsyncMock()
@@ -37,7 +34,6 @@ async def test_google_search_uses_correct_url():
         mock_client.get = AsyncMock(return_value=mock_response)
         mock_client_class.return_value = mock_client
 
-        from main import google_search
         await google_search(query="test query")
 
         call_args = mock_client.get.call_args
@@ -58,7 +54,6 @@ async def test_google_search_returns_error_on_http_error():
         ))
         mock_client_class.return_value = mock_client
 
-        from main import google_search
         result = await google_search(query="test")
 
     assert "エラー" in result or "Error" in result or "error" in result.lower()
@@ -73,7 +68,6 @@ async def test_google_search_returns_error_on_timeout():
         mock_client.get = AsyncMock(side_effect=httpx.TimeoutException("timeout"))
         mock_client_class.return_value = mock_client
 
-        from main import google_search
         result = await google_search(query="test")
 
     assert "タイムアウト" in result or "timeout" in result.lower() or "エラー" in result
