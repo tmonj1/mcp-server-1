@@ -1,7 +1,7 @@
 import pytest
 import httpx
 from unittest.mock import AsyncMock, patch, MagicMock
-from main import mcp, google_search
+from main import google_search
 
 
 @pytest.mark.asyncio
@@ -37,8 +37,9 @@ async def test_google_search_uses_correct_url():
         await google_search(query="test query")
 
         call_args = mock_client.get.call_args
-        assert "https://www.google.com/search" in call_args[0][0]
-        assert "test+query" in call_args[0][0] or "test%20query" in call_args[0][0] or "test query" in str(call_args)
+        url_arg = str(call_args[0][0])
+        assert "https://www.google.com/search" in url_arg
+        assert "test+query" in url_arg or "test%20query" in url_arg or "test query" in url_arg
 
 
 @pytest.mark.asyncio
