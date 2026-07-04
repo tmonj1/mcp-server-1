@@ -1,0 +1,62 @@
+# Python.gitignore — common Python project ignores
+
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.env
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+*.egg
+
+# Testing
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# IDEs / editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Jupyter
+.ipynb_checkpoints
+
+# Type checkers / caches
+.mypy_cache/
+.pyre/
+.pytype/
+
+# Logs and local files
+*.log
+*.pot
+
+# macOS
+.DS_Store
+
+# Temp
+tmp/
+
+# Secrets / env overrides (if used)
+.env.local
+
+# Build artefacts from pip
+pip-wheel-metadata/
+
+# Local Python environment created by some tools
+.python-version

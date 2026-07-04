@@ -1,4 +1,4 @@
-# CLAUDE.md
+# AGENTS.md
 
 ## プロジェクト概要
 
@@ -23,8 +23,8 @@ mcp-server-1 はMCPサーバのサンプルプログラムです。
 ## テスト方針
 
 - `pytest` でテストコードを実行する (`uv run pytest`)
-- `tests/unittest/` 以下にユニットテストを配置する
-- HTTP リクエストは `responses` ライブラリ等でモックして実テストしない
+- `tests/` 以下にテストを配置する
+- 外部 HTTP には実アクセスせず、`unittest.mock` 等で `httpx` クライアントをモックしてテストする
 
 ## 開発ワークフロー
 
